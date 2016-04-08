@@ -38,7 +38,7 @@ import Char
 import Array exposing (Array)
 import Regex
 
-{-| Opaque type with various internals required for encoding and decoding.
+{-| A record with various internals required for encoding and decoding.
 -}
 type alias Context =
   { guards : String
