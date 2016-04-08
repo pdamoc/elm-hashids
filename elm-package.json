@@ -1,12 +1,15 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "summary": "Elm port of the Hashids library",
     "repository": "https://github.com/pdamoc/elm-hashids.git",
     "license": "MIT",
     "source-directories": [
-        ".", "src"
+        ".",
+        "src"
     ],
-    "exposed-modules": ["Hashids"],
+    "exposed-modules": [
+        "Hashids"
+    ],
     "dependencies": {
         "elm-lang/core": "3.0.0 <= v < 4.0.0"
     },
