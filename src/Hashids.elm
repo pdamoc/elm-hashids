@@ -29,8 +29,7 @@ parameters into one or simply using them as short UIDs.
 @docs encodeHex, decodeHex, encode, encodeList, decode
 
 # Convenience wrappers
-@docs encodeUsingSalt, encodeListUsingSalt, decodeUsingSalt, encodeHexUsingSalt
-, decodeHexUsingSalt
+@docs encodeUsingSalt, encodeListUsingSalt, decodeUsingSalt, encodeHexUsingSalt, decodeHexUsingSalt
 
 -}
 
