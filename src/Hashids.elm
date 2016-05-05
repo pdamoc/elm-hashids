@@ -1,9 +1,9 @@
-module Hashids 
+module Hashids exposing
   ( Context
   , createHashidsContext, hashidsSimple, hashidsMinimum
   , encodeHex, decodeHex, encode, encodeList, decode
   , encodeUsingSalt, encodeListUsingSalt, decodeUsingSalt
-  , encodeHexUsingSalt, decodeHexUsingSalt) where 
+  , encodeHexUsingSalt, decodeHexUsingSalt)  
 {-| This is an Elm port of the Hashids library by Ivan Akimov.
    This is *not* a cryptographic hashing algorithm. Hashids is typically
    used to encode numbers to a format suitable for appearance in places
@@ -75,12 +75,9 @@ exclude toBeExcluded from =
 
 forceGet : Int -> Array a -> a
 forceGet i axs = 
-  let 
-    m = Array.get i axs 
-  in 
-    case m of 
-      Nothing -> Debug.crash <| "This should not happen"++ (toString i) 
-      Just v -> v
+  case Array.get i axs of 
+    Nothing -> Debug.crash <| "This should not happen"++ (toString i) 
+    Just v -> v
 
 swap : Int -> Int -> String -> String
 swap i j str =

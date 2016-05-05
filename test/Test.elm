@@ -1,5 +1,4 @@
 import ElmTest exposing (..)
-import Graphics.Element exposing (Element, show)
 
 import Json.Decode as Json
 import String 
@@ -52,9 +51,9 @@ bothTests : Test
 bothTests = 
   suite "Encoding & Decoding" [encoding, decoding]
 
-main : Element
+main : Program Never
 main = 
-    show (stringRunner bothTests)
+    runSuite bothTests -- outputs to the console
 
 testData : String
 testData = """[89960,65856,97751,38513,92083,25409,20930,56051]
