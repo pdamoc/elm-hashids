@@ -1,62 +1,73 @@
-import ElmTest exposing (..)
+module Tests exposing (..)
 
+import Test exposing (..)
+import Expect exposing (equal)
+import String
 import Json.Decode as Json
-import String 
 import Hashids
 
-context : Hashids.Context
-context = Hashids.hashidsMinimum "this is a salt" 10
 
+all : Test
+all =
+    describe "Encoding & Decoding" [ encoding, decoding ]
+
+
+context : Hashids.Context
+context =
+    Hashids.hashidsMinimum "this is a salt" 10
 
 
 tests : List ( List Int, String )
 tests =
-  let 
-    lines = String.split "\n" testData
+    let
+        lines =
+            String.split "\n" testData
 
-    decodeNumbers str =
-      Json.decodeString (Json.list Json.int) str
-      |> Result.withDefault []
+        decodeNumbers str =
+            Json.decodeString (Json.list Json.int) str
+                |> Result.withDefault []
 
-    numbers = 
-      List.filter (\s -> (String.left 1 s) == "[") lines
-      |> List.map decodeNumbers
+        numbers =
+            List.filter (\s -> (String.left 1 s) == "[") lines
+                |> List.map decodeNumbers
 
-    hashes = List.filter (\s -> (String.left 1 s) /= "[") lines
-  in 
-    List.map2 (,) numbers hashes
+        hashes =
+            List.filter (\s -> (String.left 1 s) /= "[") lines
+    in
+        List.map2 (,) numbers hashes
+
 
 encodeTest : ( List Int, String ) -> Test
-encodeTest (list, hash) = 
-  assertEqual (Hashids.encodeList context list) hash
-  |> test ""
+encodeTest ( list, hash ) =
+    equal (Hashids.encodeList context list) hash
+        |> (\e -> test "" (\() -> e))
 
 
 encoding : Test
-encoding = 
-  List.map encodeTest tests
-  |> suite "Encoding Suite"
+encoding =
+    List.map encodeTest tests
+        |> describe "Encoding Suite"
+
 
 decodeTest : ( List Int, String ) -> Test
-decodeTest (list, hash) = 
-  assertEqual list (Hashids.decode context hash)
-  |> test ""
+decodeTest ( list, hash ) =
+    equal list (Hashids.decode context hash)
+        |> (\e -> test "" (\() -> e))
+
 
 decoding : Test
-decoding = 
-  List.map decodeTest tests
-  |> suite "Decoding Suite"
+decoding =
+    List.map decodeTest tests
+        |> describe "Decoding Suite"
 
-bothTests : Test
-bothTests = 
-  suite "Encoding & Decoding" [encoding, decoding]
 
-main : Program Never
-main = 
-    runSuite bothTests -- outputs to the console
+
+-- outputs to the console
+
 
 testData : String
-testData = """[89960,65856,97751,38513,92083,25409,20930,56051]
+testData =
+    """[89960,65856,97751,38513,92083,25409,20930,56051]
 wMjrLFYdgF63lwtwvKSYKadS5e4upPzU3P5
 [76129,5622,46156,72323,79846,19217,75505,34113,70028]
 b1YJhj2kUmd1T0Qvuy43fKGWtWNDf2yQSVPM
