@@ -1,10 +1,10 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
-import Test exposing (..)
 import Expect exposing (equal)
-import String
-import Json.Decode as Json
 import Hashids
+import Json.Decode as Json
+import String
+import Test exposing (..)
 
 
 all : Test
@@ -28,19 +28,19 @@ tests =
                 |> Result.withDefault []
 
         numbers =
-            List.filter (\s -> (String.left 1 s) == "[") lines
+            List.filter (\s -> String.left 1 s == "[") lines
                 |> List.map decodeNumbers
 
         hashes =
-            List.filter (\s -> (String.left 1 s) /= "[") lines
+            List.filter (\s -> String.left 1 s /= "[") lines
     in
-        List.map2 (,) numbers hashes
+    List.map2 (\a b -> ( a, b )) numbers hashes
 
 
 encodeTest : ( List Int, String ) -> Test
 encodeTest ( list, hash ) =
     equal (Hashids.encodeList context list) hash
-        |> (\e -> test "" (\() -> e))
+        |> (\e -> test hash (\() -> e))
 
 
 encoding : Test
@@ -52,17 +52,13 @@ encoding =
 decodeTest : ( List Int, String ) -> Test
 decodeTest ( list, hash ) =
     equal list (Hashids.decode context hash)
-        |> (\e -> test "" (\() -> e))
+        |> (\e -> test hash (\() -> e))
 
 
 decoding : Test
 decoding =
     List.map decodeTest tests
         |> describe "Decoding Suite"
-
-
-
--- outputs to the console
 
 
 testData : String

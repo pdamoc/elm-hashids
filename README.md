@@ -5,7 +5,7 @@ Elm port of the Hashids library. http://hashids.org
 ##### Install: 
 
 ```
-elm-package install pdamoc/elm-hashids
+elm install pdamoc/elm-hashids
 ```
 
 ##### Hello, World:
@@ -23,6 +23,6 @@ main =
   div []
     [ text ids
     , br [] []
-    , text <| toString numbers
+    , text <| Debug.toString numbers
     ]
 ```
